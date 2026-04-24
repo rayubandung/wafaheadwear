@@ -59,7 +59,7 @@
                     </div>
                     
                     <div class="flex items-center gap-3">
-                        <button onclick="bukaTambahTransaksi('pengeluaran')" class="hidden md:flex items-center gap-2 bg-[#1a6452] hover:bg-[#134d3f] text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition active:scale-95">
+                        <button onclick="bukaTambahTransaksi('pemasukan')" class="hidden md:flex items-center gap-2 bg-[#1a6452] hover:bg-[#134d3f] text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition active:scale-95">
                             <i class="fa-solid fa-plus"></i> Tambah Transaksi
                         </button>
 
@@ -134,7 +134,7 @@
 
             </div>
             
-            <button onclick="bukaTambahTransaksi('pengeluaran')" class="md:hidden fixed bottom-24 right-5 w-14 h-14 bg-[#1a6452] text-white rounded-full shadow-lg flex items-center justify-center text-2xl z-20 active:scale-90 transition">
+            <button onclick="bukaTambahTransaksi('pemasukan')" class="md:hidden fixed bottom-24 right-5 w-14 h-14 bg-[#1a6452] text-white rounded-full shadow-lg flex items-center justify-center text-2xl z-20 active:scale-90 transition">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </section>
@@ -143,7 +143,7 @@
             <div class="max-w-md mx-auto md:max-w-4xl md:px-8">
                 <header class="p-5 md:px-0 md:py-8 flex justify-between items-center">
                     <h1 class="text-2xl font-bold text-slate-900">Semua Transaksi</h1>
-                    <button onclick="bukaTambahTransaksi('pengeluaran')" class="hidden md:flex items-center gap-2 bg-[#1a6452] hover:bg-[#134d3f] text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition active:scale-95">
+                    <button onclick="bukaTambahTransaksi('pemasukan')" class="hidden md:flex items-center gap-2 bg-[#1a6452] hover:bg-[#134d3f] text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition active:scale-95">
                         <i class="fa-solid fa-plus"></i> Tambah Transaksi
                     </button>
                 </header>
@@ -198,12 +198,12 @@
                 </header>
                 
                 <div class="mx-5 mt-5 bg-slate-100/80 rounded-xl p-1 flex border border-slate-200/50">
-                    <button id="btn-tipe-pengeluaran" onclick="setTipeTransaksi('pengeluaran')" class="flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition">Pengeluaran</button>
                     <button id="btn-tipe-pemasukan" onclick="setTipeTransaksi('pemasukan')" class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition">Pemasukan</button>
+                    <button id="btn-tipe-pengeluaran" onclick="setTipeTransaksi('pengeluaran')" class="flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition">Pengeluaran</button>
                 </div>
 
                 <div class="mx-5 mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center md:bg-slate-50">
-                    <p id="label-nominal" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Nominal Pengeluaran</p>
+                    <p id="label-nominal" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Nominal Pemasukan</p>
                     <input type="number" id="input-nominal" placeholder="0" class="w-full text-5xl font-bold text-center focus:outline-none bg-transparent text-[#1a6452]">
                 </div>
 
@@ -265,8 +265,8 @@
             <div class="mb-4">
                 <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Tipe</label>
                 <select id="input-kategori-tipe" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6452]/50">
-                    <option value="pengeluaran">Pengeluaran</option>
                     <option value="pemasukan">Pemasukan</option>
+                    <option value="pengeluaran">Pengeluaran</option>
                 </select>
             </div>
 
@@ -445,7 +445,8 @@
             }
         }
 
-        let stateTransaksi = { tipe: 'pengeluaran', dompet: 'tunai', kategoriId: null, kategoriData: null };
+        // UBAH DI SINI: STATE AWAL MENJADI PEMASUKAN
+        let stateTransaksi = { tipe: 'pemasukan', dompet: 'tunai', kategoriId: null, kategoriData: null };
 
         function bukaTambahTransaksi(tipe) { setTipeTransaksi(tipe); document.getElementById('input-nominal').value = ''; navigateTo('tambah'); }
 
