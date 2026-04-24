@@ -13,15 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        /* Smooth Page Transitions */
         .page { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
         .page.active { display: block; opacity: 1; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        
-        /* Glassmorphism/Overlay */
         .modal-overlay { background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); }
     </style>
 </head>
@@ -48,11 +45,6 @@
                 <i class="fa-solid fa-gear w-5"></i> Pengaturan
             </button>
         </nav>
-        <div class="p-4 border-t border-slate-100">
-            <button onclick="bukaTambahTransaksi('pengeluaran')" class="w-full bg-[#1a6452] hover:bg-[#134d3f] text-white py-3 rounded-xl font-bold shadow-md flex justify-center items-center gap-2 transition active:scale-95">
-                <i class="fa-solid fa-plus"></i> Tambah Baru
-            </button>
-        </div>
     </aside>
 
     <main class="flex-1 w-full bg-slate-50 h-screen overflow-y-auto relative pb-20 md:pb-0">
@@ -65,9 +57,16 @@
                         <p class="text-slate-500 text-sm mb-1">Halo, Rafly</p>
                         <h1 class="text-2xl font-bold text-slate-900">Catatan Kamu</h1>
                     </div>
-                    <button onclick="navigateTo('pengaturan')" class="md:hidden w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm text-slate-600 active:scale-95 transition">
-                        <i class="fa-solid fa-gear"></i>
-                    </button>
+                    
+                    <div class="flex items-center gap-3">
+                        <button onclick="bukaTambahTransaksi('pengeluaran')" class="hidden md:flex items-center gap-2 bg-[#1a6452] hover:bg-[#134d3f] text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition active:scale-95">
+                            <i class="fa-solid fa-plus"></i> Tambah Transaksi
+                        </button>
+
+                        <button onclick="navigateTo('pengaturan')" class="md:hidden w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm text-slate-600 active:scale-95 transition">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                    </div>
                 </header>
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 px-5 md:px-0">
@@ -75,7 +74,6 @@
                     <div class="md:col-span-8 space-y-6">
                         <div class="bg-[#1a6452] text-white rounded-[1.5rem] p-6 shadow-lg relative overflow-hidden">
                             <div class="absolute -right-10 -top-10 w-40 h-40 bg-white opacity-5 rounded-full blur-2xl"></div>
-                            
                             <p class="text-emerald-100/80 text-sm mb-2 relative z-10">Saldo bersih</p>
                             <h2 id="saldo-bersih" class="text-4xl md:text-5xl font-bold mb-6 relative z-10">Rp 0</h2>
                             
@@ -143,8 +141,11 @@
 
         <section id="page-transaksi" class="page pb-24 md:pb-8">
             <div class="max-w-md mx-auto md:max-w-4xl md:px-8">
-                <header class="p-5 md:px-0 md:py-8">
+                <header class="p-5 md:px-0 md:py-8 flex justify-between items-center">
                     <h1 class="text-2xl font-bold text-slate-900">Semua Transaksi</h1>
+                    <button onclick="bukaTambahTransaksi('pengeluaran')" class="hidden md:flex items-center gap-2 bg-[#1a6452] hover:bg-[#134d3f] text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition active:scale-95">
+                        <i class="fa-solid fa-plus"></i> Tambah Transaksi
+                    </button>
                 </header>
                 <div id="empty-transaksi" class="flex flex-col items-center mt-20 opacity-50">
                     <i class="fa-solid fa-file-invoice text-5xl mb-4 text-[#1a6452]"></i>
@@ -181,10 +182,9 @@
                             <div class="w-10 h-10 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center text-lg"><i class="fa-solid fa-layer-group"></i></div>
                             <span class="font-bold text-slate-800">Daftar Kategori</span>
                         </div>
-                        <button onclick="bukaModalKategori()" class="bg-[#1a6452] text-white text-sm font-bold px-4 py-2 rounded-xl active:scale-95 transition flex gap-2 items-center"><i class="fa-solid fa-plus"></i> Tambah Baru</button>
+                        <button onclick="bukaModalKategori()" class="bg-[#1a6452] hover:bg-[#134d3f] text-white text-sm font-bold px-4 py-2 rounded-xl active:scale-95 transition flex gap-2 items-center"><i class="fa-solid fa-plus"></i> Tambah Baru</button>
                     </div>
-                    <div id="list-kategori-pengaturan" class="max-h-[60vh] overflow-y-auto no-scrollbar md:grid md:grid-cols-2 md:gap-2 md:p-4">
-                        </div>
+                    <div id="list-kategori-pengaturan" class="max-h-[60vh] overflow-y-auto no-scrollbar md:grid md:grid-cols-2 md:gap-2 md:p-4"></div>
                 </div>
             </div>
         </section>
@@ -199,7 +199,7 @@
                 
                 <div class="mx-5 mt-5 bg-slate-100/80 rounded-xl p-1 flex border border-slate-200/50">
                     <button id="btn-tipe-pengeluaran" onclick="setTipeTransaksi('pengeluaran')" class="flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition">Pengeluaran</button>
-                    <button id="btn-tipe-pemasukan" onclick="setTipeTransaksi('pemasukan')" class="flex-1 py-3 text-sm font-medium text-slate-500 transition">Pemasukan</button>
+                    <button id="btn-tipe-pemasukan" onclick="setTipeTransaksi('pemasukan')" class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition">Pemasukan</button>
                 </div>
 
                 <div class="mx-5 mt-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center md:bg-slate-50">
@@ -212,8 +212,7 @@
                         <p class="text-[11px] font-semibold text-slate-500 tracking-wider uppercase">Pilih Kategori</p>
                         <button onclick="navigateTo('pengaturan')" class="text-xs text-teal-600 font-medium hover:underline">+ Edit Kategori</button>
                     </div>
-                    <div id="grid-kategori-transaksi" class="grid grid-cols-3 gap-3 mb-6">
-                        </div>
+                    <div id="grid-kategori-transaksi" class="grid grid-cols-3 gap-3 mb-6"></div>
                 </div>
 
                 <div class="mx-5 mt-2">
@@ -256,7 +255,6 @@
     <div id="modal-kategori" class="fixed inset-0 z-50 flex items-center justify-center modal-overlay hidden">
         <div class="bg-white w-[90%] max-w-sm rounded-2xl p-6 shadow-2xl transform transition-all scale-95 opacity-0" id="modal-kategori-content">
             <h3 id="modal-kategori-title" class="text-lg font-bold text-slate-900 mb-4">Tambah Kategori</h3>
-            
             <input type="hidden" id="input-kategori-id">
             
             <div class="mb-4">
@@ -296,25 +294,17 @@
     </div>
 
     <script>
-        // --- ROUTING LOGIC & ANIMASI ---
         function navigateTo(pageId) {
             const pages = document.querySelectorAll('.page');
-            
-            // 1. Matikan semua halaman (hindari tabrakan/layar putih)
             pages.forEach(p => {
                 p.classList.remove('active');
                 p.style.display = 'none';
             });
 
-            // 2. Siapkan halaman target
             const target = document.getElementById('page-' + pageId);
             target.style.display = 'block'; 
+            setTimeout(() => target.classList.add('active'), 20);
             
-            setTimeout(() => {
-                target.classList.add('active');
-            }, 20);
-            
-            // 3. Update Navigasi
             const navMobile = document.getElementById('bottom-nav');
             const navDesktopItems = document.querySelectorAll('.nav-item-desktop');
 
@@ -329,7 +319,6 @@
                     setTimeout(() => navMobile.style.transform = 'translateY(0)', 20);
                 }
                 
-                // Active State di Mobile Nav
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.classList.replace('text-[#1a6452]', 'text-slate-400');
                     if (item.getAttribute('data-target') === pageId) {
@@ -337,7 +326,6 @@
                     }
                 });
 
-                // Active State di Desktop Sidebar
                 navDesktopItems.forEach(item => {
                     item.classList.replace('bg-teal-50', 'bg-transparent');
                     item.classList.replace('text-[#1a6452]', 'text-slate-500');
@@ -347,33 +335,25 @@
                     }
                 });
             }
-            // Auto scroll to top
             document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- PWA SERVICE WORKER REGISTRATION ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => console.log('SW Registered'))
-                    .catch(err => console.log('SW Failed', err));
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Failed', err));
             });
         }
 
-        // --- DATABASE LOGIC (IndexedDB Versi 2) ---
         const dbName = "CashflowDB";
         let db;
         const request = indexedDB.open(dbName, 2);
 
         request.onupgradeneeded = (e) => {
             db = e.target.result;
-            if (!db.objectStoreNames.contains('transactions')) {
-                db.createObjectStore('transactions', { keyPath: 'id', autoIncrement: true });
-            }
+            if (!db.objectStoreNames.contains('transactions')) db.createObjectStore('transactions', { keyPath: 'id', autoIncrement: true });
             if (!db.objectStoreNames.contains('categories')) {
                 const catStore = db.createObjectStore('categories', { keyPath: 'id', autoIncrement: true });
                 catStore.createIndex('tipe', 'tipe', { unique: false });
-
                 const defaultCats = [
                     { nama: 'Jajan', icon: 'fa-utensils', tipe: 'pengeluaran' },
                     { nama: 'Bensin', icon: 'fa-car', tipe: 'pengeluaran' },
@@ -386,36 +366,20 @@
             }
         };
 
-        request.onsuccess = (e) => {
-            db = e.target.result;
-            inisialisasiAplikasi();
-        };
+        request.onsuccess = (e) => { db = e.target.result; hitungSaldo(); loadKategoriPengaturan(); };
 
-        function inisialisasiAplikasi() {
-            hitungSaldo();
-            loadKategoriPengaturan();
-        }
-
-        // --- MANAJEMEN KATEGORI (CRUD) ---
         function loadKategoriPengaturan() {
-            const transaction = db.transaction(['categories'], 'readonly');
-            const request = transaction.objectStore('categories').getAll();
-
+            const request = db.transaction(['categories'], 'readonly').objectStore('categories').getAll();
             request.onsuccess = () => {
-                const categories = request.result;
                 const container = document.getElementById('list-kategori-pengaturan');
                 container.innerHTML = '';
-
-                categories.forEach(cat => {
+                request.result.forEach(cat => {
                     const iconColor = cat.tipe === 'pemasukan' ? 'text-emerald-500 bg-emerald-50' : 'text-rose-500 bg-rose-50';
                     container.innerHTML += `
                         <div class="p-4 border-b border-slate-50 md:border md:rounded-xl flex justify-between items-center hover:bg-slate-50 transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-full ${iconColor} flex items-center justify-center text-lg"><i class="fa-solid ${cat.icon}"></i></div>
-                                <div>
-                                    <p class="text-sm font-bold text-slate-800">${cat.nama}</p>
-                                    <p class="text-[10px] text-slate-500 capitalize">${cat.tipe}</p>
-                                </div>
+                                <div><p class="text-sm font-bold text-slate-800">${cat.nama}</p><p class="text-[10px] text-slate-500 capitalize">${cat.tipe}</p></div>
                             </div>
                             <div class="flex gap-2">
                                 <button onclick="editKategori(${cat.id})" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 hover:bg-teal-50 hover:text-teal-600 transition flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
@@ -427,7 +391,6 @@
             };
         }
 
-        // --- MODAL KATEGORI LOGIC ---
         function selectIcon(btn, iconClass) {
             document.querySelectorAll('.icon-btn').forEach(el => el.className = 'icon-btn w-10 h-10 shrink-0 rounded-full border-2 border-transparent bg-slate-100 text-slate-500 hover:bg-slate-200 transition');
             btn.className = 'icon-btn w-10 h-10 shrink-0 rounded-full border-2 border-[#1a6452] bg-[#1a6452]/10 text-[#1a6452] transition';
@@ -437,29 +400,17 @@
         function bukaModalKategori(id = null) {
             const modal = document.getElementById('modal-kategori');
             const content = document.getElementById('modal-kategori-content');
-            
             document.getElementById('input-kategori-id').value = id || '';
             document.getElementById('modal-kategori-title').innerText = id ? 'Edit Kategori' : 'Tambah Kategori';
-            
-            if(!id) {
-                document.getElementById('input-kategori-nama').value = '';
-                document.querySelectorAll('.icon-btn')[0].click(); 
-            }
-
+            if(!id) { document.getElementById('input-kategori-nama').value = ''; document.querySelectorAll('.icon-btn')[0].click(); }
             modal.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
         }
 
         function tutupModalKategori() {
-            const modal = document.getElementById('modal-kategori');
             const content = document.getElementById('modal-kategori-content');
-            
-            content.classList.remove('scale-100', 'opacity-100');
-            content.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 200);
+            content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => document.getElementById('modal-kategori').classList.add('hidden'), 200);
         }
 
         function simpanDataKategori() {
@@ -467,23 +418,14 @@
             const nama = document.getElementById('input-kategori-nama').value;
             const tipe = document.getElementById('input-kategori-tipe').value;
             const icon = document.getElementById('input-kategori-icon').value;
-
             if(!nama) return alert('Nama kategori tidak boleh kosong!');
-
             const newKategori = { nama, tipe, icon };
             if(id) newKategori.id = parseInt(id); 
 
             const transaction = db.transaction(['categories'], 'readwrite');
-            const store = transaction.objectStore('categories');
-            if(id) { store.put(newKategori); } else { store.add(newKategori); }
+            if(id) transaction.objectStore('categories').put(newKategori); else transaction.objectStore('categories').add(newKategori);
 
-            transaction.oncomplete = () => {
-                tutupModalKategori();
-                loadKategoriPengaturan();
-                if(document.getElementById('page-tambah').classList.contains('active')){
-                    renderGridKategori(stateTransaksi.tipe); 
-                }
-            };
+            transaction.oncomplete = () => { tutupModalKategori(); loadKategoriPengaturan(); if(document.getElementById('page-tambah').classList.contains('active')) renderGridKategori(stateTransaksi.tipe); };
         }
 
         function editKategori(id) {
@@ -492,66 +434,44 @@
                 const data = request.result;
                 document.getElementById('input-kategori-nama').value = data.nama;
                 document.getElementById('input-kategori-tipe').value = data.tipe;
-                
-                document.querySelectorAll('.icon-btn').forEach(b => {
-                    if(b.innerHTML.includes(data.icon)) b.click();
-                });
+                document.querySelectorAll('.icon-btn').forEach(b => { if(b.innerHTML.includes(data.icon)) b.click(); });
                 bukaModalKategori(id);
             };
         }
 
         function hapusKategori(id) {
-            if(confirm('Yakin ingin menghapus kategori ini? (Transaksi yang menggunakan kategori ini tetap aman)')) {
-                const transaction = db.transaction(['categories'], 'readwrite');
-                transaction.objectStore('categories').delete(id);
-                transaction.oncomplete = () => loadKategoriPengaturan();
+            if(confirm('Yakin hapus kategori ini?')) {
+                db.transaction(['categories'], 'readwrite').objectStore('categories').delete(id).onsuccess = () => loadKategoriPengaturan();
             }
         }
 
-        // --- STATE TRANSAKSI BARU ---
         let stateTransaksi = { tipe: 'pengeluaran', dompet: 'tunai', kategoriId: null, kategoriData: null };
 
-        function bukaTambahTransaksi(tipe) {
-            setTipeTransaksi(tipe);
-            document.getElementById('input-nominal').value = '';
-            navigateTo('tambah');
-        }
+        function bukaTambahTransaksi(tipe) { setTipeTransaksi(tipe); document.getElementById('input-nominal').value = ''; navigateTo('tambah'); }
 
         function setTipeTransaksi(tipe) {
             stateTransaksi.tipe = tipe;
-            const btnPengeluaran = document.getElementById('btn-tipe-pengeluaran');
-            const btnPemasukan = document.getElementById('btn-tipe-pemasukan');
-            const labelNominal = document.getElementById('label-nominal');
-
+            const bPengeluaran = document.getElementById('btn-tipe-pengeluaran'), bPemasukan = document.getElementById('btn-tipe-pemasukan'), lNominal = document.getElementById('label-nominal');
             if (tipe === 'pengeluaran') {
-                btnPengeluaran.className = 'flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition';
-                btnPemasukan.className = 'flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition';
-                labelNominal.innerText = 'Nominal Pengeluaran';
+                bPengeluaran.className = 'flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition';
+                bPemasukan.className = 'flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition';
+                lNominal.innerText = 'Nominal Pengeluaran';
             } else {
-                btnPemasukan.className = 'flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition';
-                btnPengeluaran.className = 'flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition';
-                labelNominal.innerText = 'Nominal Pemasukan';
+                bPemasukan.className = 'flex-1 py-3 bg-white rounded-lg shadow-sm text-sm font-semibold transition';
+                bPengeluaran.className = 'flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition';
+                lNominal.innerText = 'Nominal Pemasukan';
             }
             renderGridKategori(tipe);
         }
 
         function renderGridKategori(tipeFilter) {
             const request = db.transaction(['categories'], 'readonly').objectStore('categories').index('tipe').getAll(tipeFilter);
-
             request.onsuccess = () => {
-                const categories = request.result;
-                const container = document.getElementById('grid-kategori-transaksi');
-                container.innerHTML = '';
-                
-                stateTransaksi.kategoriId = null;
-                stateTransaksi.kategoriData = null;
-
-                categories.forEach((cat, idx) => {
-                    const isSelected = idx === 0; 
-                    if(isSelected) pilihKategori(cat);
-
+                const container = document.getElementById('grid-kategori-transaksi'); container.innerHTML = '';
+                stateTransaksi.kategoriId = null; stateTransaksi.kategoriData = null;
+                request.result.forEach((cat, idx) => {
+                    if(idx === 0) { stateTransaksi.kategoriId = cat.id; stateTransaksi.kategoriData = cat; }
                     const colorClass = tipeFilter === 'pemasukan' ? 'text-emerald-500 bg-emerald-50' : 'text-rose-500 bg-rose-50';
-
                     container.innerHTML += `
                         <button id="cat-btn-${cat.id}" onclick='pilihKategoriElement(${JSON.stringify(cat)})' class="cat-btn bg-white border border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 shadow-sm hover:shadow-md transition active:scale-95 relative">
                             <div id="cat-check-${cat.id}" class="absolute top-2 right-2 w-4 h-4 bg-white rounded-full flex items-center justify-center text-[#1a6452] text-[10px] hidden"><i class="fa-solid fa-check"></i></div>
@@ -564,13 +484,8 @@
             };
         }
 
-        function pilihKategori(cat) {
-            stateTransaksi.kategoriId = cat.id;
-            stateTransaksi.kategoriData = cat;
-        }
-
         function pilihKategoriElement(cat) {
-            pilihKategori(cat);
+            stateTransaksi.kategoriId = cat.id; stateTransaksi.kategoriData = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => btn.className = "cat-btn bg-white border border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 shadow-sm hover:shadow-md transition active:scale-95 relative");
             document.querySelectorAll('[id^="cat-check-"]').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('[id^="cat-text-"]').forEach(el => { el.classList.remove('text-white'); el.classList.add('text-slate-600'); });
@@ -583,161 +498,77 @@
 
         function setDompet(dompet) {
             stateTransaksi.dompet = dompet;
-            const btnTunai = document.getElementById('btn-dompet-tunai');
-            const btnBank = document.getElementById('btn-dompet-bank');
-
-            const classAktif = 'flex-1 bg-[#1a6452] text-white rounded-xl py-3 px-2 flex items-center justify-center gap-2 shadow-sm text-sm font-medium transition active:scale-95';
-            const classNonAktif = 'flex-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl py-3 px-2 flex items-center justify-center gap-2 shadow-sm text-sm font-medium transition active:scale-95';
-
-            if(dompet === 'tunai') { btnTunai.className = classAktif; btnBank.className = classNonAktif; } 
-            else { btnBank.className = classAktif; btnTunai.className = classNonAktif; }
+            const bTunai = document.getElementById('btn-dompet-tunai'), bBank = document.getElementById('btn-dompet-bank');
+            const cAktif = 'flex-1 bg-[#1a6452] text-white rounded-xl py-3 px-2 flex items-center justify-center gap-2 shadow-sm text-sm font-medium transition active:scale-95';
+            const cNonAktif = 'flex-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl py-3 px-2 flex items-center justify-center gap-2 shadow-sm text-sm font-medium transition active:scale-95';
+            if(dompet === 'tunai') { bTunai.className = cAktif; bBank.className = cNonAktif; } else { bBank.className = cAktif; bTunai.className = cNonAktif; }
         }
 
-        // --- FORMATTERS ---
-        function formatRupiah(angka) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-        }
+        function formatRupiah(angka) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
+        function formatTanggal(iso) { return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso)); }
 
-        function formatTanggal(isoString) {
-            const date = new Date(isoString);
-            return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(date);
-        }
-
-        // --- CORE APP LOGIC ---
         function simpanTransaksi() {
             const nominal = parseInt(document.getElementById('input-nominal').value);
-            
             if (!nominal || nominal <= 0) return alert('Silakan masukkan nominal yang valid!');
             if (!stateTransaksi.kategoriData) return alert('Pilih kategori terlebih dahulu!');
 
-            const transaksiBaru = {
-                nominal: nominal,
-                tipe: stateTransaksi.tipe,
-                dompet: stateTransaksi.dompet,
-                tanggal: new Date().toISOString(),
-                kategoriNama: stateTransaksi.kategoriData.nama,
-                kategoriIcon: stateTransaksi.kategoriData.icon
-            };
-
+            const trx = { nominal, tipe: stateTransaksi.tipe, dompet: stateTransaksi.dompet, tanggal: new Date().toISOString(), kategoriNama: stateTransaksi.kategoriData.nama, kategoriIcon: stateTransaksi.kategoriData.icon };
             const transaction = db.transaction(['transactions'], 'readwrite');
-            transaction.objectStore('transactions').add(transaksiBaru);
-
-            transaction.oncomplete = () => {
-                hitungSaldo();
-                navigateTo('beranda');
-            };
+            transaction.objectStore('transactions').add(trx);
+            transaction.oncomplete = () => { hitungSaldo(); navigateTo('beranda'); };
         }
 
         function hitungSaldo() {
             const request = db.transaction(['transactions'], 'readonly').objectStore('transactions').getAll();
-
             request.onsuccess = () => {
                 const data = request.result;
-                let totalPemasukan = 0, totalPengeluaran = 0, saldoTunai = 0, saldoBank = 0;
-
+                let tMasuk = 0, tKeluar = 0, sTunai = 0, sBank = 0;
                 data.forEach(trx => {
-                    if (trx.tipe === 'pemasukan') {
-                        totalPemasukan += trx.nominal;
-                        if(trx.dompet === 'tunai') saldoTunai += trx.nominal;
-                        if(trx.dompet === 'bank') saldoBank += trx.nominal;
-                    } else if (trx.tipe === 'pengeluaran') {
-                        totalPengeluaran += trx.nominal;
-                        if(trx.dompet === 'tunai') saldoTunai -= trx.nominal;
-                        if(trx.dompet === 'bank') saldoBank -= trx.nominal;
-                    }
+                    if (trx.tipe === 'pemasukan') { tMasuk += trx.nominal; if(trx.dompet === 'tunai') sTunai += trx.nominal; if(trx.dompet === 'bank') sBank += trx.nominal; } 
+                    else { tKeluar += trx.nominal; if(trx.dompet === 'tunai') sTunai -= trx.nominal; if(trx.dompet === 'bank') sBank -= trx.nominal; }
                 });
-
-                document.getElementById('saldo-bersih').innerText = formatRupiah(totalPemasukan - totalPengeluaran);
-                document.getElementById('total-pemasukan').innerText = formatRupiah(totalPemasukan);
-                document.getElementById('total-pengeluaran').innerText = formatRupiah(totalPengeluaran);
-                if(document.getElementById('saldo-tunai')) document.getElementById('saldo-tunai').innerText = formatRupiah(saldoTunai);
-                if(document.getElementById('saldo-bank')) document.getElementById('saldo-bank').innerText = formatRupiah(saldoBank);
-
-                renderRiwayat(data);
-                renderStatistik(data, totalPemasukan, totalPengeluaran);
+                document.getElementById('saldo-bersih').innerText = formatRupiah(tMasuk - tKeluar);
+                document.getElementById('total-pemasukan').innerText = formatRupiah(tMasuk);
+                document.getElementById('total-pengeluaran').innerText = formatRupiah(tKeluar);
+                if(document.getElementById('saldo-tunai')) document.getElementById('saldo-tunai').innerText = formatRupiah(sTunai);
+                if(document.getElementById('saldo-bank')) document.getElementById('saldo-bank').innerText = formatRupiah(sBank);
+                renderRiwayat(data); renderStatistik(data, tMasuk, tKeluar);
             };
         }
 
         function renderRiwayat(data) {
-            const containerTerbaru = document.getElementById('list-transaksi-terbaru');
-            const containerSemua = document.getElementById('list-semua-transaksi');
-            const emptyTransaksi = document.getElementById('empty-transaksi');
-
-            containerTerbaru.innerHTML = '';
-            containerSemua.innerHTML = '';
-
-            if (data.length === 0) {
-                containerTerbaru.innerHTML = '<div class="text-center text-slate-400 text-sm py-8 border border-dashed border-slate-200 rounded-xl">Belum ada transaksi.</div>';
-                emptyTransaksi.style.display = 'flex';
-                return;
-            }
-
-            emptyTransaksi.style.display = 'none';
-            const reversedData = [...data].reverse();
-
-            reversedData.forEach((trx, index) => {
-                const isPemasukan = trx.tipe === 'pemasukan';
-                const iconColorClass = isPemasukan ? 'bg-emerald-50 text-emerald-500' : 'bg-rose-50 text-rose-500';
-                const textColorClass = isPemasukan ? 'text-emerald-500' : 'text-slate-700';
-
-                const itemHTML = `
+            const cTerbaru = document.getElementById('list-transaksi-terbaru'), cSemua = document.getElementById('list-semua-transaksi'), empty = document.getElementById('empty-transaksi');
+            cTerbaru.innerHTML = ''; cSemua.innerHTML = '';
+            if (data.length === 0) { cTerbaru.innerHTML = '<div class="text-center text-slate-400 text-sm py-8 border border-dashed border-slate-200 rounded-xl">Belum ada transaksi.</div>'; empty.style.display = 'flex'; return; }
+            empty.style.display = 'none';
+            [...data].reverse().forEach((trx, i) => {
+                const isM = trx.tipe === 'pemasukan';
+                const html = `
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex justify-between items-center hover:shadow-md transition duration-300">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full ${iconColorClass} flex items-center justify-center shrink-0">
-                                <i class="fa-solid ${trx.kategoriIcon || 'fa-tag'}"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-slate-800">${trx.kategoriNama || 'Lainnya'}</p>
-                                <p class="text-[10px] text-slate-500 capitalize">${trx.dompet} • ${formatTanggal(trx.tanggal)}</p>
-                            </div>
+                            <div class="w-10 h-10 rounded-full ${isM ? 'bg-emerald-50 text-emerald-500' : 'bg-rose-50 text-rose-500'} flex items-center justify-center shrink-0"><i class="fa-solid ${trx.kategoriIcon || 'fa-tag'}"></i></div>
+                            <div><p class="text-sm font-bold text-slate-800">${trx.kategoriNama || 'Lainnya'}</p><p class="text-[10px] text-slate-500 capitalize">${trx.dompet} • ${formatTanggal(trx.tanggal)}</p></div>
                         </div>
-                        <p class="font-bold text-sm ${textColorClass} shrink-0 pl-2">
-                            ${isPemasukan ? '+' : '-'}${formatRupiah(trx.nominal)}
-                        </p>
-                    </div>
-                `;
-
-                containerSemua.innerHTML += itemHTML;
-                if (index < 3) containerTerbaru.innerHTML += itemHTML;
+                        <p class="font-bold text-sm ${isM ? 'text-emerald-500' : 'text-slate-700'} shrink-0 pl-2">${isM ? '+' : '-'}${formatRupiah(trx.nominal)}</p>
+                    </div>`;
+                cSemua.innerHTML += html; if (i < 3) cTerbaru.innerHTML += html;
             });
         }
 
-        function renderStatistik(data, pemasukan, pengeluaran) {
-            const container = document.getElementById('konten-statistik');
-            const emptyStatistik = document.getElementById('empty-statistik');
-
-            if (data.length === 0) {
-                emptyStatistik.style.display = 'flex';
-                container.innerHTML = '';
-                return;
-            }
-
-            emptyStatistik.style.display = 'none';
-
-            const total = pemasukan + pengeluaran;
-            const persenPemasukan = total === 0 ? 0 : Math.round((pemasukan / total) * 100);
-            const persenPengeluaran = total === 0 ? 0 : Math.round((pengeluaran / total) * 100);
-
-            container.innerHTML = `
+        function renderStatistik(data, masuk, keluar) {
+            const cont = document.getElementById('konten-statistik'), empty = document.getElementById('empty-statistik');
+            if (data.length === 0) { empty.style.display = 'flex'; cont.innerHTML = ''; return; }
+            empty.style.display = 'none';
+            const total = masuk + keluar, pM = total === 0 ? 0 : Math.round((masuk / total) * 100), pK = total === 0 ? 0 : Math.round((keluar / total) * 100);
+            cont.innerHTML = `
                 <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-4">
                     <h3 class="text-sm font-bold text-slate-800 mb-5">Perbandingan Arus Kas</h3>
-                    
-                    <div class="mb-5">
-                        <div class="flex justify-between text-xs mb-2"><span class="text-slate-500 font-medium">Pemasukan</span><span class="font-bold text-emerald-500">${persenPemasukan}%</span></div>
-                        <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"><div class="bg-emerald-400 h-full rounded-full transition-all duration-1000" style="width: ${persenPemasukan}%"></div></div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-xs mb-2"><span class="text-slate-500 font-medium">Pengeluaran</span><span class="font-bold text-rose-500">${persenPengeluaran}%</span></div>
-                        <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"><div class="bg-rose-400 h-full rounded-full transition-all duration-1000" style="width: ${persenPengeluaran}%"></div></div>
-                    </div>
+                    <div class="mb-5"><div class="flex justify-between text-xs mb-2"><span class="text-slate-500 font-medium">Pemasukan</span><span class="font-bold text-emerald-500">${pM}%</span></div><div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"><div class="bg-emerald-400 h-full rounded-full transition-all duration-1000" style="width: ${pM}%"></div></div></div>
+                    <div><div class="flex justify-between text-xs mb-2"><span class="text-slate-500 font-medium">Pengeluaran</span><span class="font-bold text-rose-500">${pK}%</span></div><div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"><div class="bg-rose-400 h-full rounded-full transition-all duration-1000" style="width: ${pK}%"></div></div></div>
                 </div>
-
                 <div class="bg-[#1a6452]/5 text-[#1a6452] p-6 rounded-2xl text-sm border border-[#1a6452]/10 text-center flex flex-col justify-center items-center">
-                    <span class="text-slate-500 mb-1">Total perputaran uang Anda</span>
-                    <span class="text-2xl font-black block">${formatRupiah(total)}</span>
-                </div>
-            `;
+                    <span class="text-slate-500 mb-1">Total perputaran uang Anda</span><span class="text-2xl font-black block">${formatRupiah(total)}</span>
+                </div>`;
         }
     </script>
 </body>
